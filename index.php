@@ -84,23 +84,23 @@ button {
 <body>
 
   <div id="saveContainer">
-    <form action="send.php" method="post">
+    <form method="post">
       <h2>Первый вопрос</h2>
       <input type='hidden' name='id' value='0'>
       <div class="quiz_row">
         <div class="quiz_answer">
-          <input type="radio" name="quiz1" id="quiz1-1" value="Называет время" />
-          <label for="quiz1-1">Называет время</label>
+          <input type="radio" name="quiz0" id="quiz0-1" value="Называет время" />
+          <label for="quiz0-1">Называет время</label>
         </div>
 
         <div class="quiz_answer">
-          <input type="radio" name="quiz1" id="quiz1-2" value="Сегодня не удобно" />
-          <label for="quiz1-2">Сегодня не удобно</label>
+          <input type="radio" name="quiz0" id="quiz0-2" value="Сегодня не удобно" />
+          <label for="quiz0-2">Сегодня не удобно</label>
         </div>
 
         <div class="quiz_answer">
-          <input type="radio" name="quiz1" id="quiz1-3" value="Сбрасывает трубку" />
-          <label for="quiz1-3">Сбрасывает трубку</label>
+          <input type="radio" name="quiz0" id="quiz0-3" value="Сбрасывает трубку" />
+          <label for="quiz0-3">Сбрасывает трубку</label>
         </div>
       </div>
       <button type="submit">Отправить</button>
@@ -130,33 +130,30 @@ button {
   }
 
   const saveContainer = document.querySelector('#saveContainer')
-  const form = document.querySelector('form')
-  form.addEventListener('submit', (e) => send(e))
-
+  const forms = document.querySelectorAll('form')
+  forms.forEach(form => form.addEventListener('submit', (e) => send(e)));
   function createLine(answer) {
-    const quizLine = `
-  <form action="send.php" method="post" >
+    let quizLine = `
+  <form method="post">
     <h2>${answer.title}</h2>
-        <input type='hidden' name='id' value='${answer.id}'>
-        <div class="quiz_row">
-        <div class="quiz_answer">
-          <input type="radio" name="quiz${id}" id="quiz1-1" value="Называет время" />
-          <label for="quiz1-1">Называет время</label>
-        </div>
-
-        <div class="quiz_answer">
-          <input type="radio" name="quiz${id}" id="quiz1-2" value="Сегодня не удобно" />
-          <label for="quiz1-2">Сегодня не удобно</label>
-        </div>
-
-        <div class="quiz_answer">
-          <input type="radio" name="quiz${id}" id="quiz1-3" value="Сбрасывает трубку" />
-          <label for="quiz1-3">Сбрасывает трубку</label>
-        </div>
+        <input type='hidden' name='id' value=${answer.id}>
+        <div class="quiz_row">`;
+    // console.log();
+    // answer.answeres.forEach(ans => console.log(ans));
+    answer.answeres.forEach((ans, index) => {
+      debugger;
+      quizLine += ` 
+      <div class="quiz_answer">
+        <input type="radio" name="quiz${answer.id}" id="quiz${answer.id}-${index}" value="${ans}" />
+        <label for="quiz${answer.id}-${index}">${ans}</label>
       </div>
-      <button type="submit">Отправить</button>
-      </form>
-        `;
+      `
+    })
+
+    quizLine += `
+    </div>
+    <button type="submit">Отправить</button>
+    </form>`;
     saveContainer.insertAdjacentHTML("beforeend", quizLine);
   }
   </script>

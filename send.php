@@ -1,6 +1,6 @@
 <?php
-$answer = $_POST['quiz1']; 
-$id = $_POST['id'] ?? 0;
+$id = $_POST['id'];
+$answer = $_POST["quiz$id"]; 
 
 $answers = [
   "Сбрасывает трубку" => "Пошел нахуй хуйло",
@@ -28,5 +28,5 @@ $response = [
 
 
 header('Content-Type: application/json; charset=utf-8');
-echo json_encode($response[0]);
+echo json_encode($response[$id]);
 ?>
